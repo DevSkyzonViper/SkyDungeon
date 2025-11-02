@@ -8,7 +8,7 @@ My first alpha release (0.1.0 alpha), that Im publishing on github.
 
 
 
-# Key features:
+## Key features:
  
 - A dedicated (self created) save game lib
 - A bare bones map system
@@ -18,7 +18,7 @@ My first alpha release (0.1.0 alpha), that Im publishing on github.
 
 
 
-# Missing:
+## Missing:
  
 - Level system
 - Fighting system
@@ -29,7 +29,7 @@ My first alpha release (0.1.0 alpha), that Im publishing on github.
 
 
 
-# Known bugs:
+## Known bugs:
  
 - On MacOS, if you enter you name in the player creation menu, the top part of the border doubles for whatever reason
 
