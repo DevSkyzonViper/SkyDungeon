@@ -1,0 +1,18 @@
+# Build folders
+/build/
+/Debug/
+/Release/
+
+# Visual Studio Code settings
+.vscode/
+
+# Executables
+*.exe
+*.obj
+*.o
+*.pdb
+*.dll
+
+# Saves
+/save/
+*.sav
