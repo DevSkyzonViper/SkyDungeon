@@ -7,6 +7,7 @@ My first alpha release (0.1.0 alpha), that Im publishing on github.
 - Savegame, termios, text rendered
 
 
+
 # Key features:
  
 - A dedicated (self created) save game lib
@@ -14,6 +15,7 @@ My first alpha release (0.1.0 alpha), that Im publishing on github.
 - Fully working menus
 - A bare bones shop
 - An inventory
+
 
 
 # Missing:
@@ -26,9 +28,11 @@ My first alpha release (0.1.0 alpha), that Im publishing on github.
 - Creativity for the story, items and monsters to fight
 
 
+
 # Known bugs:
  
 - On MacOS, if you enter you name in the player creation menu, the top part of the border doubles for whatever reason
+
 
 
 Its was kinda hard to code it but im proud. The first project where I dedicated more than 20 hours into.
