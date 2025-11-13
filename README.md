@@ -19,7 +19,7 @@ And now here we are, on the 3rd try to do it. From Batch -> C -> C++
 
 ## Key features:
  
-- Deedicated core functions
+- Dedicated core functions
 - A bare bones map system
 - Scrolling maps system
 - Fully working menus
