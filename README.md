@@ -12,7 +12,7 @@ And now here we are, on the 3rd try to do it. From Batch -> C -> C++
 # A quick run down:
  
 - Its writen in C++
-- Modularity first (I am refactoring the code rn so 50% xd)
+- Modularity first (I just refactoring the code xd)
 - Savegame, termios, text rendered
 
 
