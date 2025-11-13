@@ -1,4 +1,4 @@
-My first alpha release (0.1.0 alpha), that Im publishing on github.
+My second alpha release (0.2.0 alpha), that Im publishing on github.
 A bit of a side story first.
 
 It was 5 years ago (when I was 13) and I was scripting in batch, where I got the idea to create a terminal based RPG game.
