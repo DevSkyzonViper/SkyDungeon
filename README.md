@@ -40,7 +40,7 @@ And now here we are, on the 3rd try to do it. From Batch -> C -> C++
 
 ## Known bugs:
  
-- Currently there are none
+- When creating a player with any other class than "Wizard", the map doesnt render
 - Windows is untested
 
 
