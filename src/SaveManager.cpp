@@ -1,90 +1,93 @@
+//==================================================================================
+// INCLUDES OF GENERAL LIBRARIES
+//==================================================================================
 #include <iostream>
 #include <fstream>
 
-#include "SGL.h"
+
+
+//==================================================================================
+// INCLUDES OF MY OWN LIBRARIES
+//==================================================================================
+#include "SaveManager.h"
 
 
 
-//----------------------------------------------------------------------------------------//
-//                            Global Variables for the savegame                           //
-//----------------------------------------------------------------------------------------//
-
-
-SaveGame save; //Current save game
-
+//==================================================================================
+// GLOBAL VARIABLES
+//==================================================================================
+SaveGame save; // Current save game
 
 
 
-//----------------------------------------------------------------------------------------//
-//                         Function declarations for the savegame                         //
-//----------------------------------------------------------------------------------------//
+//==================================================================================
+// GENERAL FUNCTION DEFINITIONS
+//==================================================================================
 
-
-//This function trys to load the save game
-bool loadSaveGame() //Return value is for error handling
+// This function trys to load the save game
+bool loadSaveGame() // Return value is for error handling
 {
-    std::string line; //The line extracted of the used file
+    // Temporary variable
+    std::string line;
 
-    //Trying to open the save-file
+    // Trying to open the save-file and load it
     std::ifstream saveSlot("save/slot_1.sav");
     if(!saveSlot.is_open())
     {
-        //There is no created file with that number
         std::cout << "No save-file / SaveFile corrupt" << std::endl;
-        
         save.saveSlot = 0;
 
         return true;
     }
     else
     {
-        //Load the players saveGameFile data
-        std::getline(saveSlot, line); //Save-slot
+        // Load the players saveGameFile data
+        std::getline(saveSlot, line);               // Save-slot
         save.saveSlot = std::stoi(line);
-        std::getline(saveSlot, save.player.name); //Player-Name
-        std::getline(saveSlot, line); //Player-Level
+        std::getline(saveSlot, save.player.name);   // Player-Name
+        std::getline(saveSlot, line);               // Player-Level
         save.player.level = std::stoi(line);
-        std::getline(saveSlot, line); //Player-Exp
+        std::getline(saveSlot, line);               // Player-Exp
         save.player.exp = std::stoi(line);
-        std::getline(saveSlot, line); //Player-Class
+        std::getline(saveSlot, line);               // Player-Class
         save.player.playerClass = std::stoi(line);
-        std::getline(saveSlot, line); //Players-Coins
+        std::getline(saveSlot, line);               // Players-Coins
         save.player.coins = std::stoi(line);
 
-        //Load the players attribute data
-        std::getline(saveSlot, line); //Players-MaxHP
+        // Load the players attribute data
+        std::getline(saveSlot, line);               // Players-MaxHP
         save.player.atr.maxHP = std::stoi(line);
-        std::getline(saveSlot, line); //Players-HP
+        std::getline(saveSlot, line);               // Players-HP
         save.player.atr.HP = std::stoi(line);
-        std::getline(saveSlot, line); //Players-Base-Damage
-        save.player.atr.baseDamage = std::stoi(line);
-        std::getline(saveSlot, line); //Players-Max-Mana
+        std::getline(saveSlot, line);               // Players-Base-Damage
+        save.player.atr.baseDamage=std::stoi(line);
+        std::getline(saveSlot, line);               // Players-Max-Mana
         save.player.atr.maxMana = std::stoi(line);
-        std::getline(saveSlot, line); //Players-Mana
+        std::getline(saveSlot, line);               // Players-Mana
         save.player.atr.mana = std::stoi(line);
-        std::getline(saveSlot, line); //Players-Defense
+        std::getline(saveSlot, line);               // Players-Defense
         save.player.atr.defense = std::stoi(line);
-        std::getline(saveSlot, line); //Players-Speed
+        std::getline(saveSlot, line);               // Players-Speed
         save.player.atr.speed = std::stoi(line);
 
-        //Load the inventory saveGameFile data
-        std::getline(saveSlot, line); //Inv-Place-1
+        // Load the inventory saveGameFile data
+        std::getline(saveSlot, line);               // Inv-Place-1
         save.player.inv.place[0] = std::stoi(line);
-        std::getline(saveSlot, line); //Inv-Place-2
+        std::getline(saveSlot, line);               // Inv-Place-2
         save.player.inv.place[1] = std::stoi(line);
-        std::getline(saveSlot, line); //Inv-Place-3
+        std::getline(saveSlot, line);               // Inv-Place-3
         save.player.inv.place[2] = std::stoi(line);
-        std::getline(saveSlot, line); //Inv-Place-4
+        std::getline(saveSlot, line);               // Inv-Place-4
         save.player.inv.place[3] = std::stoi(line);
-        std::getline(saveSlot, line); //Inv-Place-5
+        std::getline(saveSlot, line);               // Inv-Place-5
         save.player.inv.place[4] = std::stoi(line);
-        std::getline(saveSlot, line); //Inv-Place-6
+        std::getline(saveSlot, line);               // Inv-Place-6
         save.player.inv.place[5] = std::stoi(line);
-        std::getline(saveSlot, line); //Inv-Place-7
+        std::getline(saveSlot, line);               // Inv-Place-7
         save.player.inv.place[6] = std::stoi(line);
-        std::getline(saveSlot, line); //Inv-Place-8
+        std::getline(saveSlot, line);               // Inv-Place-8
         save.player.inv.place[7] = std::stoi(line);
-        std::getline(saveSlot, line); //Inv-Place-9
+        std::getline(saveSlot, line);               // Inv-Place-9
         save.player.inv.place[8] = std::stoi(line);
     }
 
@@ -94,9 +97,10 @@ bool loadSaveGame() //Return value is for error handling
     return false;
 }
 
-//This function trys to save the current save game
-bool saveCurrentGame() //Return value is for error handling
+// This function trys to save the current save game
+bool saveCurrentGame() // Return value is for error handling
 {
+    // Opens the save file to save into
     std::ofstream saveGameFile("save/slot_1.sav");
     if(!saveGameFile.is_open())
     {
@@ -104,17 +108,17 @@ bool saveCurrentGame() //Return value is for error handling
         return false;
     }
 
-    //Writing file headert
+    // Writing file header
     saveGameFile << save.saveSlot << "\n";
 
-    //Saving player-data
+    // Saving player-data
     saveGameFile << save.player.name << "\n";
     saveGameFile << save.player.level << "\n";
     saveGameFile << save.player.exp << "\n";
     saveGameFile << save.player.playerClass << "\n";
     saveGameFile << save.player.coins << "\n";
 
-    //Saving player-attribute-data
+    // Saving player-attribute-data
     saveGameFile << save.player.atr.maxHP << "\n";
     saveGameFile << save.player.atr.HP << "\n";
     saveGameFile << save.player.atr.baseDamage << "\n";
@@ -123,7 +127,7 @@ bool saveCurrentGame() //Return value is for error handling
     saveGameFile << save.player.atr.defense << "\n";
     saveGameFile << save.player.atr.speed << "\n";
 
-    //Saving inventory-data
+    // Saving inventory-data
     saveGameFile << save.player.inv.place[0] << "\n";
     saveGameFile << save.player.inv.place[1] << "\n";
     saveGameFile << save.player.inv.place[2] << "\n";
@@ -137,9 +141,10 @@ bool saveCurrentGame() //Return value is for error handling
     return true;
 }
 
-//This function trys to create a new save-game in the given slot
+// This function trys to create a new save-game in the given slot
 bool createNewSaveGame(int slotToCreate) //Return value is for error handling
 {
+    // Open save file to create a new save
     std::ofstream saveGameFile("save/slot_1.sav");
     if(!saveGameFile.is_open())
     {
@@ -147,17 +152,17 @@ bool createNewSaveGame(int slotToCreate) //Return value is for error handling
         return false;
     }
 
-    //Writing file header
+    // Writing file header
     saveGameFile << 1 << "\n";
 
-    //Saving player-data
+    // Saving player-data
     saveGameFile << "none" << "\n";
     saveGameFile << 1 << "\n";
     saveGameFile << 0 << "\n";
     saveGameFile << 0 << "\n";
     saveGameFile << 0 << "\n";
 
-    //Saving player-attribute-data
+    // Saving player-attribute-data
     saveGameFile << 0 << "\n";
     saveGameFile << 0 << "\n";
     saveGameFile << 0 << "\n";
@@ -166,7 +171,7 @@ bool createNewSaveGame(int slotToCreate) //Return value is for error handling
     saveGameFile << 0 << "\n";
     saveGameFile << 0 << "\n";
 
-    //Saving inventory-data
+    // Saving inventory-data
     saveGameFile << 0 << "\n";
     saveGameFile << 0 << "\n";
     saveGameFile << 0 << "\n";
@@ -180,9 +185,10 @@ bool createNewSaveGame(int slotToCreate) //Return value is for error handling
     return true;
 }
 
-//This function trys to delete the save-game for the given slot
+// This function trys to delete the save-game for the given slot
 bool deleteSaveGame(int slotToDelete) //Return value is for error handling
 {
+    // Opening save file to clear
     std::ofstream saveGameFile("save/slot_1.sav");
     if(!saveGameFile.is_open())
     {
@@ -190,17 +196,17 @@ bool deleteSaveGame(int slotToDelete) //Return value is for error handling
         return false;
     }
 
-    //Writing file header
+    // Writing file header
     saveGameFile << 0 << "\n";
 
-    //Saving player-data
+    // Saving player-data
     saveGameFile << "none" << "\n";
     saveGameFile << 1 << "\n";
     saveGameFile << 0 << "\n";
     saveGameFile << 0 << "\n";
     saveGameFile << 0 << "\n";
 
-    //Saving player-attribute-data
+    // Saving player-attribute-data
     saveGameFile << 0 << "\n";
     saveGameFile << 0 << "\n";
     saveGameFile << 0 << "\n";
@@ -209,7 +215,7 @@ bool deleteSaveGame(int slotToDelete) //Return value is for error handling
     saveGameFile << 0 << "\n";
     saveGameFile << 0 << "\n";
 
-    //Saving inventory-data
+    // Saving inventory-data
     saveGameFile << 0 << "\n";
     saveGameFile << 0 << "\n";
     saveGameFile << 0 << "\n";
@@ -223,13 +229,14 @@ bool deleteSaveGame(int slotToDelete) //Return value is for error handling
     return true;
 }
 
-//Creates a new player, customizeable by the user
+// Creates a new player, customizeable by the user
 void playerCreation(Window &window)
 {
+    // Reads out the character name of the scene
+    int index = 0;
     char buffer[13];
     char cls = window.at(36, 18).cChar;
 
-    int index = 0;
     for(int i = 1; i < 13 && index < 12; i++)
     {
         if(window.at(i + 34, 16).cChar != '_')
@@ -242,19 +249,20 @@ void playerCreation(Window &window)
         }
     }
 
+    // String ending
     buffer[index] = '\0';
 
-    //Putting the choosen name into the loaded save
+    // Putting the choosen name into the loaded save
     save.player.name = std::string(buffer);
 
-    //Setting the basics of the player
+    // Setting the basics of the player
     save.player.level = 1;
     save.player.exp = 0;
     save.player.coins = 0;
     
     if(cls == '1')
     {
-        //Setting the class and atrributes to Knight
+        // Setting the class and atrributes to Knight
         save.player.playerClass = 1;
         save.player.atr.maxHP = 120;
         save.player.atr.HP = 120;
@@ -266,7 +274,7 @@ void playerCreation(Window &window)
     }
     else if(cls == '2')
     {
-        //Setting the class and atrributes to Wizard
+        // Setting the class and atrributes to Wizard
         save.player.playerClass = 2;
         save.player.atr.maxHP = 100;
         save.player.atr.HP = 100;
@@ -278,7 +286,7 @@ void playerCreation(Window &window)
     }
     else if(cls == '3')
     {
-        //Setting the class and atrributes to Healer
+        // Setting the class and atrributes to Healer
         save.player.playerClass = 3;
         save.player.atr.maxHP = 120;
         save.player.atr.HP = 120;
@@ -290,7 +298,7 @@ void playerCreation(Window &window)
     }
     else if(cls == '4')
     {
-        //Setting the class and atrributes to Rogue
+        // Setting the class and atrributes to Rogue
         save.player.playerClass = 4;
         save.player.atr.maxHP = 105;
         save.player.atr.HP = 105;
@@ -301,7 +309,7 @@ void playerCreation(Window &window)
         save.player.atr.speed = 16;
     }
 
-    //Emptying the players inventory
+    // Emptying the players inventory
     save.player.inv.place[0] = 0;
     save.player.inv.place[1] = 0;
     save.player.inv.place[2] = 0;
@@ -312,3 +320,4 @@ void playerCreation(Window &window)
     save.player.inv.place[7] = 0;
     save.player.inv.place[8] = 0;
 }
+

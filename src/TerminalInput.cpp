@@ -1,25 +1,40 @@
+//==================================================================================
+// INCLUDES OF GENERAL LIBRARIES
+//==================================================================================
 #include <iostream>
 #include <cctype>
 #include <string>
 #include <termios.h>
 #include <unistd.h>
 
-#include "IPL.h"
-#include "TRL.h"
-#include "SGL.h"
 
 
-//Some Terminal shit (ChatGPT)
+//==================================================================================
+// INCLUDES OF MY OWN LIBRARIES
+//==================================================================================
+#include "TerminalInput.h"
+#include "TerminalUI.h"
+#include "SaveManager.h"
+
+
+
+//==================================================================================
+// STRUCT DEFINITIONS
+//==================================================================================
 struct termios orig_termios;
 
 
 
-//Terminal reset (ChatGPT)
+//==================================================================================
+// TERMIOS TERMINAL SETTINGS FUNCTIONS
+//==================================================================================
+
+// Terminal reset
 void resetTerminal() {
     tcsetattr(STDIN_FILENO, TCSANOW, &orig_termios);
 }
 
-//Dynamic input processing (ChatGPT)
+// Dynamic input processing
 void enableRawMode() {
     tcgetattr(STDIN_FILENO, &orig_termios);
     atexit(resetTerminal);
@@ -31,14 +46,57 @@ void enableRawMode() {
 
 
 
+//==================================================================================
+// INPUT PROCESSING: GENERAL
+//==================================================================================
 
-//----------------------------------------------------------------------------------------//
-//                            Input that is for the menu and map                          //
-//----------------------------------------------------------------------------------------//
+// The function processes the users general game input
+// to select the next thing that should happen (ChatGPT)
+bool processGameInput()
+{
+    char c = getchar();
 
+    if (c == '\n')
+    {
+        if(processEnterInput())
+        {
+            return true;
+        }
+    }
+    else if (c == 127 || c == 8)
+    {
+        processBackInput();
+    }
+    else if (c == '\x1b')
+    {
+        if(mapActive == false)
+        {
+            processArrowKeyInputForMenu();
+        }
+        else if(mapActive == true)
+        {
+            processArrowKeyInputForMap();
+        }
+    }
+    else if (std::isalnum(c))
+    {
+        //Alle Buchstaben a-Z und Zahlen 0-9
+        std::string input(1, c);
 
-//The function processes the enter input of the user
-//for selecting something or opening it
+        if(mapActive == false)
+        {
+            processNormalInputForMenu(input);
+        }
+        else if(mapActive == true)
+        {
+            processNormalInputForMap(input);
+        }
+    }
+    return false;
+}
+
+// The function processes the enter input of the user
+// for selecting something or opening it
 bool processEnterInput()
 {
     //Interacting of the menu
@@ -307,9 +365,8 @@ bool processEnterInput()
     return false;
 }
 
-
-//The function processes the back input of the user
-//for returning or deleting a character input
+// The function processes the back input of the user
+// for returning or deleting a character input
 void processBackInput()
 {
     //Menu-Scene: Create New Game
@@ -334,15 +391,12 @@ void processBackInput()
 
 
 
+//==================================================================================
+// INPUT PROCESSING: MENU
+//==================================================================================
 
-
-//----------------------------------------------------------------------------------------//
-//                         Input that is specifically for the menu                        //
-//----------------------------------------------------------------------------------------//
-
-
-//Processes if there is an option over the current one
-//and switches to it, if possible
+// Processes if there is an option over the current one
+// and switches to it, if possible
 void processUpInputForMenu()
 {
     if(currentScene->interactOptionVertical == true)
@@ -362,8 +416,8 @@ void processUpInputForMenu()
     }
 }
 
-//Processes if there is an option under the current one
-//and switches to it, if possible
+// Processes if there is an option under the current one
+// and switches to it, if possible
 void processDownInputForMenu()
 {
     //Filtering for vertical interaction options
@@ -384,8 +438,8 @@ void processDownInputForMenu()
     }
 }
 
-//Processes if there is an option left the current one
-//and switches to it, if possible
+// Processes if there is an option left the current one
+// and switches to it, if possible
 void processLeftInputForMenu()
 {
     if(currentScene->interactOptionVertical == false)
@@ -444,8 +498,8 @@ void processLeftInputForMenu()
     }
 }
 
-//Processes if there is an option right the current one
-//and switches to it, if possible
+// Processes if there is an option right the current one
+// and switches to it, if possible
 void processRightInputForMenu()
 {
     //Filtering for vertical interaction options
@@ -505,9 +559,8 @@ void processRightInputForMenu()
     }
 }
 
-
-//The function processes the arrow keys input for the menu
-//to choose the corresponding menu item (ChatGPT)
+// The function processes the arrow keys input for the menu
+// to choose the corresponding menu item
 void processArrowKeyInputForMenu()
 {
     char seq[2];
@@ -533,10 +586,9 @@ void processArrowKeyInputForMenu()
     }
 }
 
-
-//The function processes the general inputs of the user
-//such as numbers, characters, and special characters
-//specifically for the menu
+// The function processes the general inputs of the user
+// such as numbers, characters, and special characters
+// specifically for the menu
 void processNormalInputForMenu(std::string input)
 {
     //Menu-Scene: Create New Game
@@ -613,16 +665,13 @@ void processNormalInputForMenu(std::string input)
 
 
 
+//==================================================================================
+// INPUT PROCESSING: MAP
+//==================================================================================
 
-
-//----------------------------------------------------------------------------------------//
-//                          Input that is specifically for the map                        //
-//----------------------------------------------------------------------------------------//
-
-
-//The function checks, if the place to move the player
-//is walkable, and moves the player. If the player moved
-//it also checks for interactions that happen on walk
+// The function checks, if the place to move the player
+// is walkable, and moves the player. If the player moved
+// it also checks for interactions that happen on walk
 void processMoveInputForMap(std::string input)
 {
     //Checks if the move was made
@@ -719,9 +768,8 @@ void processMoveInputForMap(std::string input)
     }
 }
 
-
-//The function processes the arrow keys input for the map
-//to move the player in the corresponding direction (ChatGPT)
+// The function processes the arrow keys input for the map
+// to move the player in the corresponding direction
 void processArrowKeyInputForMap()
 {
     char seq[2];
@@ -747,10 +795,9 @@ void processArrowKeyInputForMap()
     }
 }
 
-
-//The function processes the general inputs of the user
-//such as numbers, characters, and special characters
-//specifically for the map
+// The function processes the general inputs of the user
+// such as numbers, characters, and special characters
+// specifically for the map
 void processNormalInputForMap(std::string input)
 {
     //Opens the inventory
@@ -777,54 +824,3 @@ void processNormalInputForMap(std::string input)
 
 
 
-
-
-//----------------------------------------------------------------------------------------//
-//                               General game input to process                            //
-//----------------------------------------------------------------------------------------//
-
-
-//The function processes the users general game input
-//to select the next thing that should happen (ChatGPT)
-bool processGameInput()
-{
-    char c = getchar();
-
-    if (c == '\n')
-    {
-        if(processEnterInput())
-        {
-            return true;
-        }
-    }
-    else if (c == 127 || c == 8)
-    {
-        processBackInput();
-    }
-    else if (c == '\x1b')
-    {
-        if(mapActive == false)
-        {
-            processArrowKeyInputForMenu();
-        }
-        else if(mapActive == true)
-        {
-            processArrowKeyInputForMap();
-        }
-    }
-    else if (std::isalnum(c))
-    {
-        //Alle Buchstaben a-Z und Zahlen 0-9
-        std::string input(1, c);
-
-        if(mapActive == false)
-        {
-            processNormalInputForMenu(input);
-        }
-        else if(mapActive == true)
-        {
-            processNormalInputForMap(input);
-        }
-    }
-    return false;
-}

@@ -1,24 +1,28 @@
-#include "PSL.h"
-
+//==================================================================================
+// INCLUDES OF GENERAL LIBRARIES
+//==================================================================================
 #include <string>
 
 
 
-
-//----------------------------------------------------------------------------------------//
-//                          Global Variables to know, where we are                        //
-//----------------------------------------------------------------------------------------//
-
-
-bool mapActive; //Show if we are on a menu or map
-Window window; //The global window
-Map *currentMap; //Shows the current map we are
-Interactions *currentScene; //Shows the current menu-scene we are
-Coordinates *currentMenuItem; //Show the specific menu-item we are
-Coordinates playerMapPosition; //Show the specific menu-item we are
+//==================================================================================
+// INCLUDES OF MY OWN LIBRARIES
+//==================================================================================
+#include "GameScenesLib.h"
 
 
-//A list of Menu Scenes
+
+//==================================================================================
+// GLOBAL VARIABLE DEFINITIONS
+//==================================================================================
+bool mapActive;                 // Show if we are on a menu or map
+Window window;                  // The global window
+Map *currentMap;                // Shows the current map we are
+Interactions *currentScene;     // Shows the current menu-scene we are
+Coordinates *currentMenuItem;   // Show the specific menu-item we are
+Coordinates playerMapPosition;  // Show the specific menu-item we are
+
+// A list of Menu Scenes
 Interactions startScene;
 Interactions newGameScene;
 Interactions debugScene;
@@ -27,8 +31,7 @@ Interactions inventoryScene;
 Interactions shopScene;
 Interactions popUpMenu;
 
-
-//A list of the Map Scenes
+// A list of the Map Scenes
 Map defaultMapScene(108, 20);
 Map nextMapScene(108, 20);
 Map endMapScene(108, 20);
@@ -36,11 +39,9 @@ Map garryHouseMapScene(108, 20);
 
 
 
-
-//----------------------------------------------------------------------------------------//
-//                   General function, that always needs to be used FIRST                 //
-//----------------------------------------------------------------------------------------//
-
+//==================================================================================
+// INPUT PROCESSING: INITIALIZE
+//==================================================================================
 
 //Initialized all the scenes (map and menu's)
 void initScenes()
@@ -275,13 +276,11 @@ void initScenes()
 
 
 
+//==================================================================================
+// INPUT PROCESSING: SCENES
+//==================================================================================
 
-//----------------------------------------------------------------------------------------//
-//                       Render functions, specifically for the menus                     //
-//----------------------------------------------------------------------------------------//
-
-
-//The functions renders the start screen of the game
+// The functions renders the start screen of the game
 void renderStartScene(Window &window)
 {
 
@@ -305,7 +304,7 @@ void renderStartScene(Window &window)
     window.render();
 }
 
-//The function renders the newGameScene where a new character is created
+// The function renders the newGameScene where a new character is created
 void renderNewGameScene(Window &window)
 {
     //Clears all
@@ -333,7 +332,7 @@ void renderNewGameScene(Window &window)
     window.render();
 }
 
-//Just for debug grr
+// Just for debug grr
 void renderDebugScene(Window &window)
 {
     //Clears all
@@ -357,7 +356,7 @@ void renderDebugScene(Window &window)
     window.render();
 }
 
-//The function renders the inventory of the player
+// The function renders the inventory of the player
 void renderInventoryScene(Window &window)
 {
     //Clears all
@@ -408,7 +407,7 @@ void renderInventoryScene(Window &window)
     window.render();
 }
 
-//The function renders the shop the player can buy from
+// The function renders the shop the player can buy from
 void renderShopScene(Window &window)
 {
     //Clears all
@@ -451,42 +450,37 @@ void renderShopScene(Window &window)
 
 
 
+//==================================================================================
+// INPUT PROCESSING: MAP
+//==================================================================================
 
-//----------------------------------------------------------------------------------------//
-//                       Render functions, specifically for the maps                      //
-//----------------------------------------------------------------------------------------//
-
-
-//The function renders a default map, that can be customized
+// The function renders a default map, that can be customized
 void renderDefaultMap(Window &window, Map &map)
 {
-    //Clears all
+    // Clears all
     std::system("clear");
-    //map.clearMap();
 
-    //Makes a border
+    // Makes a border
     window.makeBorder();
     window.makeBox(0, 0, 110, 22);
 
-    //Insert the hotbar and map
+    // Insert the hotbar and map
     insertHotbarToWindow(window);
 
-    //Draws map onto the window
+    // Draws map onto the window
     window.drawMap(1, 1, map);
 
-    //Renders the scene
+    // Renders the scene
     window.render();
 }
 
 
 
+//==================================================================================
+// INPUT PROCESSING: GENERAL
+//==================================================================================
 
-//----------------------------------------------------------------------------------------//
-//                       Extra function for add-ons to menus or maps                      //
-//----------------------------------------------------------------------------------------//
-
-
-//The function draws the logo to the window
+// The function draws the logo to the window
 void drawLogoToWindow(Window &window)
 {
     window.writeIntoWindow(5, 3, R"( $$$$$$\  $$\                 $$$$$$$\                                                              )");
@@ -502,35 +496,35 @@ void drawLogoToWindow(Window &window)
     window.writeIntoWindow(5,11, R"(                     \______/                                \______/                               )");
 }
 
-//The functions renders the infos of the knight screen (StartScene)
+// The functions renders the infos of the knight screen (StartScene)
 void insertKnightDetails(Window &window)
 {
     window.clearBox(53, 16, 37, 8);
     window.writeIntoWindow(56, 17, "Knight:");
 }
 
-//The functions renders the infos of the wizard screen (StartScene)
+// The functions renders the infos of the wizard screen (StartScene)
 void insertWizardDetails(Window &window)
 {
     window.clearBox(53, 16, 37, 8);
     window.writeIntoWindow(56, 17, "Wizard:");
 }
 
-//The functions renders the infos of the healer screen (StartScene)
+// The functions renders the infos of the healer screen (StartScene)
 void insertHealerDetails(Window &window)
 {
     window.clearBox(53, 16, 37, 8);
     window.writeIntoWindow(56, 17, "Healer:");
 }
 
-//The functions renders the infos of the rouge screen (StartScene)
+// The functions renders the infos of the rouge screen (StartScene)
 void insertRougeDetails(Window &window)
 {
     window.clearBox(53, 16, 37, 8);
     window.writeIntoWindow(56, 17, "Rouge:");
 }
 
-//The function insert the info that the game is saved
+// The function insert the info that the game is saved
 void insertSavedIntoWindow(Window &window)
 {
     //Makes room for the settings menu
@@ -546,7 +540,7 @@ void insertSavedIntoWindow(Window &window)
     window.writeIntoWindow(41, 15, "Press enter key to continue");
 }
 
-//The function inserts the generic line of the debug npc
+// The function inserts the generic line of the debug npc
 void insertGenericTalkNPC(Window &window)
 {
     //Makes room for the speaking line
@@ -569,7 +563,7 @@ void insertGenericTalkNPC(Window &window)
     window.render();
 }
 
-//The function insert the default hotbar for map into the window
+// The function insert the default hotbar for map into the window
 void insertHotbarToWindow(Window &window)
 {
     //Makes room for the hotbar
@@ -623,7 +617,7 @@ void insertHotbarToWindow(Window &window)
     window.writeIntoWindow(84, 25, "Open Settings (X)");
 }
 
-//The function inserts the settings menu into the window
+// The function inserts the settings menu into the window
 void insertSettingsMenu(Window &window)
 {
     //Makes room for the settings menu

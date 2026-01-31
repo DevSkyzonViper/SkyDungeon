@@ -1,4 +1,4 @@
-My second alpha release (0.2.0 alpha), that Im publishing on github.
+My third alpha release (0.3.0 alpha), that Im publishing on github.
 A bit of a side story first.
 
 It was 5 years ago (when I was 13) and I was scripting in batch, where I got the idea to create a terminal based RPG game.
@@ -12,7 +12,7 @@ And now here we are, on the 3rd try to do it. From Batch -> C -> C++
 # A quick run down:
  
 - Its writen in C++
-- Modularity first (I just refactoring the code xd)
+- Modularity first (I just refactoring the code AGAIN. But god do I love it)
 - Savegame, termios, text rendered
 
 
@@ -40,11 +40,11 @@ And now here we are, on the 3rd try to do it. From Batch -> C -> C++
 
 ## Known bugs:
  
-- When creating a player with any other class than "Wizard", the map doesnt render
-- Windows is untested
+- Currently there are none
+- Windows doesnt work because of compatibility with termios.
 
 
 
-Its was kinda hard to code it but im proud. The first project where I dedicated more than 35 hours into.
+Its was kinda hard to code it but im proud. The first project where I dedicated more than 48 hours into.
 Its a passion project, that I wanted to make with my best friend 5 years ago (where I was 13) and lost interest. But now
 here to finish it :D

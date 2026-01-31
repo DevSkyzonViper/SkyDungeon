@@ -1,34 +1,31 @@
+//==================================================================================
+// INCLUDES OF GENERAL LIBRARIES
+//==================================================================================
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <cctype>
 
-#include "src/SGL.h" //SaveGameLibrary
-#include "src/TRL.h" //TextRenderLibrary
-#include "src/IPL.h" //InputProcessingLibrary
-#include "src/PSL.h" //PrepareSceneLibrary
-#include "src/IL.h"  //ItemLibrary
-
-void initGame();
-
-// Main function
-int main()
-{
-    initGame();
-    
-    while(true)
-    {
-        if(processGameInput())
-        {
-            return 0;
-        }
-    }
 
 
-    return 0;
-}
+//==================================================================================
+// INCLUDES OF MY OWN LIBRARIES
+//==================================================================================
+#include "src/SaveManager.h"        // SaveGameLibrary
+#include "src/TerminalUI.h"         // TextRenderLibrary
+#include "src/TerminalInput.h"      // InputProcessingLibrary
+#include "src/GameScenesLib.h"      // PrepareSceneLibrary
+#include "src/ItemListLib.h"        // ItemLibrary
 
-void initGame()
+
+
+//==================================================================================
+// GENERAL FUNCTION DEFINITIONS
+//==================================================================================
+
+// The function initializes the game scenes, item list and load
+// the save game, enabling raw mode and rendering the start scene
+void initializeGame()
 {
     //Setting interaction Options for startscreen
     initScenes(); //Initialise the scenes
@@ -43,3 +40,27 @@ void initGame()
     //Start rendering
     renderStartScene(window);
 }
+
+
+
+//==================================================================================
+// MAIN FUNCTION
+//==================================================================================
+
+int main()
+{
+    // InitializeGame
+    initializeGame();
+    
+    while(true)
+    {
+        // Check input buffer
+        if(processGameInput())
+        {
+            return 0;
+        }
+    }
+    
+    return 0;
+}
+

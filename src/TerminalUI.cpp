@@ -1,16 +1,25 @@
-#include "TRL.h"
-#include "PSL.h"
-
+//==================================================================================
+// INCLUDES OF GENERAL LIBRARIES
+//==================================================================================
 #include <iostream>
 #include <string>
 
 
-//----------------------------------------------------------------------------------------//
-//                           Window-Class and all its functions                           //
-//----------------------------------------------------------------------------------------//
+
+//==================================================================================
+// INCLUDES OF MY OWN LIBRARIES
+//==================================================================================
+#include "TerminalUI.h"
+#include "GameScenesLib.h"
 
 
-/* ------- Standard-Window ------- */
+
+//==================================================================================
+// CLASS FUNCTION DEFINITIONS
+//==================================================================================
+
+//========== WINDOW-KONSTRUCTORS / DESTRUCTOR ==========//
+
 Window::Window()
 {
     iWidth = 110;
@@ -23,7 +32,6 @@ Window::Window()
     }
 }
 
-/* ------- Sizeable-Window ------- */
 Window::Window(int iWidth, int iHeight)
 {
     this->iWidth = iWidth;
@@ -36,14 +44,15 @@ Window::Window(int iWidth, int iHeight)
     }
 }
 
-/* ------- Destrukt-Window ------- */
 Window::~Window()
 {
     delete[] tilemap;
 }
 
 
-//Write a text string into the window
+//============ WINDOW FUNCTION DEFINITIONS ============//
+
+// Write a text string into the window
 void Window::writeIntoWindow(int x, int y, std::string sText)
 {
     for(int i = 0; i < sText.size(); i++)
@@ -53,7 +62,7 @@ void Window::writeIntoWindow(int x, int y, std::string sText)
     }
 }
 
-//Draws a border onto the window
+// Draws a border onto the window
 void Window::makeBorder()
 {
     for(int i = 0; i < iWidth; i++)
@@ -69,7 +78,7 @@ void Window::makeBorder()
     }
 }
 
-//Clears a field for a box
+// Clears a field for a box
 void Window::clearBox(int x, int y, int boxWidth, int boxHeight)
 {
     for (int j = 1; j < boxHeight - 1; ++j)
@@ -88,7 +97,7 @@ void Window::clearBox(int x, int y, int boxWidth, int boxHeight)
     }
 }
 
-//Draws a box onto the window
+// Draws a box onto the window
 void Window::makeBox(int x, int y, int boxWidth, int boxHeight)
 {
     if(x < 0 || y < 0 || x >= iWidth || y >= iHeight)
@@ -118,7 +127,7 @@ void Window::makeBox(int x, int y, int boxWidth, int boxHeight)
     }
 }
 
-//Draws a box onto the window
+// Draws a box onto the window
 void Window::makeBox(int x, int y, int boxWidth, int boxHeight, std::string sColor)
 {
     if(x < 0 || y < 0 || x >= iWidth || y >= iHeight)
@@ -148,7 +157,7 @@ void Window::makeBox(int x, int y, int boxWidth, int boxHeight, std::string sCol
     }
 }
 
-//Draws a box onto the window
+// Draws a box onto the window
 void Window::makeBox(int x, int y, int boxWidth, int boxHeight, std::string sColor, std::string sBackColor)
 {
     if(x < 0 || y < 0 || x >= iWidth || y >= iHeight)
@@ -179,7 +188,7 @@ void Window::makeBox(int x, int y, int boxWidth, int boxHeight, std::string sCol
     }
 }
 
-//Clears the whole window
+// Clears the whole window
 void Window::clearWindow()
 {
     for (int i = 0; i < iWidth * iHeight; ++i)
@@ -190,7 +199,7 @@ void Window::clearWindow()
     }
 }
 
-//Draws the map onto the window
+// Draws the map onto the window
 void Window::drawMap(int x, int y, Map &map)
 {
     for (int j = 0; j < map.getHeight(); ++j)
@@ -209,7 +218,7 @@ void Window::drawMap(int x, int y, Map &map)
     }
 }
 
-//Renders the window onto the screen
+// Renders the window onto the screen
 void Window::render()
 {
     std::system("clear");
@@ -298,14 +307,7 @@ void Window::render()
 }
 
 
-
-
-//----------------------------------------------------------------------------------------//
-//                           Map-Class and all its functions                           //
-//----------------------------------------------------------------------------------------//
-
-
-/* ------- Standard-Map ------- */
+//=========== MAP-KONSTRUCTORS / DESTRUCTOR ===========//
 Map::Map()
 {
     iWidth = 108;
@@ -328,7 +330,6 @@ Map::Map()
     }
 }
 
-/* ------- Sizeable-Map ------- */
 Map::Map(int iWidth, int iHeight)
 {
     this->iWidth = iWidth;
@@ -350,12 +351,13 @@ Map::Map(int iWidth, int iHeight)
     }
 }
 
-/* ------- Destrukt-Map ------- */
 Map::~Map()
 {
     delete[] tilemap;
 }
 
+
+//============== MAP FUNCTION DEFINITIONS ==============//
 
 //Returns the players infos
 Coordinates Map::getPlayerPos()
@@ -491,5 +493,6 @@ int Map::getWidth()
 {
     return iWidth;
 }
+
 
 

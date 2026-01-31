@@ -1,17 +1,19 @@
-#ifndef TRL_H
-#define TRL_H
+#ifndef TERMINAL_UI_H
+#define TERMINAL_UI_H
 
+
+//==================================================================================
+// INCLUDES OF GENERAL LIBRARIES
+//==================================================================================
 #include <string>
 
 
 
+//==================================================================================
+// STRUCT DEFINITIONS
+//==================================================================================
 
-//----------------------------------------------------------------------------------------//
-//                          All necesary struct implementations                           //
-//----------------------------------------------------------------------------------------//
-
-
-//A single tile on a map/window
+// A single tile on a map/window
 struct Tile
 {
     char cChar; //Character displayed
@@ -22,7 +24,7 @@ struct Tile
     bool walkable; //Collision for walking
 };
 
-//Coordinates for a player/monster
+// Coordinates for a player/monster
 struct Coordinates
 {
     std::string name; //Current interaction name
@@ -35,7 +37,7 @@ struct Coordinates
     }
 };
 
-//A list of Menu Interactions
+// A list of Menu Interactions
 struct Interactions
 {
     int iNumberInct;
@@ -50,19 +52,17 @@ struct Interactions
 
 
 
-
-//----------------------------------------------------------------------------------------//
-//                           Map-Class and all its functions                           //
-//----------------------------------------------------------------------------------------//
-
+//==================================================================================
+// CLASS DEFINITIONS
+//==================================================================================
 
 class Map
 {
     private:
-        int iWidth; //Width of the Map
-        int iHeight; //Height of the Map
-        Tile *tilemap; //The contents of the Map
-        Coordinates playerPos; //Position of the player
+        int iWidth;             //Width of the Map
+        int iHeight;            //Height of the Map
+        Tile *tilemap;          //The contents of the Map
+        Coordinates playerPos;  //Position of the player
         
     public:
         Map();
@@ -84,14 +84,6 @@ class Map
         int getHeight(); //Returns the Map height
         int getWidth(); //Returns the Map width
 };
-
-
-
-
-//----------------------------------------------------------------------------------------//
-//                           Window-Class and all its functions                           //
-//----------------------------------------------------------------------------------------//
-
 
 class Window
 {
@@ -120,4 +112,5 @@ class Window
 
 
 
-#endif
+
+#endif //TERMINAL_UI_H
